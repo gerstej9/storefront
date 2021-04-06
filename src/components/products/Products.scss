@@ -1,0 +1,36 @@
+.products{
+  height: 70vh;
+  display:flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow:scroll;
+
+  h2{
+    justify-content: center;
+    width: 80%;
+    font-size: 3rem;
+    font-weight: 300;
+    display: flex;
+    margin-top: .5em;
+    margin-bottom: 0em
+  }
+
+  .description{
+    color: grey;
+    font-size: 1.5rem;
+    margin-top:0em;
+  }
+}
+
+.MuiCardContent-root{
+  h5{
+    font-size:20px
+  }
+  h2{
+    font-size:20px;
+  }
+}
+
+.MuiCard-root{
+  margin:20px;
+}
