@@ -1,0 +1,15 @@
+.App-footer{
+display: flex;
+justify-content: center;
+align-items:center;
+flex-wrap: wrap;
+margin-top: 2em;
+background-color:rgb(229, 226, 226);
+height: 10vh;
+  .tag{
+    color:gray;
+    width:100%;
+    text-align:center;
+    margin-top: 0px
+  }
+}
