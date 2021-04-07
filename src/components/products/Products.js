@@ -2,7 +2,8 @@
 import React from 'react';
 import './Products.scss';
 import { connect } from 'react-redux';
-import { switchProducts } from '../../store/products.js';
+import { switchProducts} from '../../store/products.js';
+import { addToCart } from '../../store/cart.js';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -14,11 +15,18 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 150,
+    width: 325,
+    maxHeight: 325,
   },
   media: {
     height: 150,
   },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    paddingLeft: 20,
+    paddingRight: 20,
+  }
 });
 
 const Products = (props) => {
@@ -48,11 +56,11 @@ const Products = (props) => {
               </Typography>
             </CardContent>
           </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
+          <CardActions className={classes.buttonContainer}>
+            <Button onClick={() => props.addToCart(product)}size="small" color="primary">
                   ADD TO CART
             </Button>
-            <Button size="small" color="primary">
+            <Button  size="small" color="primary">
                   VIEW DETAILS
             </Button>
           </CardActions>
@@ -72,6 +80,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   switchProducts,
+  addToCart,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);
