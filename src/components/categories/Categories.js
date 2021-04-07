@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import {switchCategory} from '../../store/categories.js';
 import {switchProducts} from '../../store/products.js'
 const Categories = (props) => {
-  console.log(props);
   return(
     <div>
       <h2>Browse Our Categories</h2>
