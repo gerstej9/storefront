@@ -19,9 +19,9 @@ const SimpleCart = (props) => {
   const classes = useStyles();
   if(props.cart.length > 0){
     return(
-      <Card className={classes.root}>
+      <Card className={classes.root} id="cart">
         <CardActionArea>
-          <CardContent>
+          <CardContent id="cartContent">
             {props.cart.map((product, i) => {
                 return (
                     <Typography key={i}>

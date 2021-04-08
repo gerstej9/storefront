@@ -7,8 +7,10 @@ import Categories from './components/categories/Categories.js'
 import Container from '@material-ui/core/Container';
 import store from'./store/index.js';
 import SimpleCart from './components/cart/SimpleCart.js'
+// import { useEffect } from 'react';
 
 function App() {
+
   return (
     <Container>
       <Provider store={store()}>
@@ -23,5 +25,6 @@ function App() {
     </Container>
   );
 }
+
 
 export default App;

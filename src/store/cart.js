@@ -1,3 +1,4 @@
+import axios from "axios";
 
 let initialState = {
   cart: [],
@@ -12,10 +13,11 @@ export default function CartReducer(state=initialState, action){
   switch(type){
     case "ADD_TO_CART":
     state.cartCount++;
-    payload.cart++;
     if(!state.cart.includes(payload)){
+      payload.cart = 1
       newCart = [...state.cart, payload];
     }else{
+      payload.cart+= 1;
       newCart = [...state.cart]
       
     }
@@ -24,10 +26,21 @@ export default function CartReducer(state=initialState, action){
   }
 }
 
-export function addToCart(name){
-  return{
-    type: "ADD_TO_CART",
-    payload: name,
+export const addToCart = (name) => (dispatch, getState) =>{
+  if(name.inStock > 0){
+    name.inStock --; 
   }
+  return axios({
+    method: 'put',
+    url: `https://api-js401.herokuapp.com/api/v1/products/${name._id}`,
+    data: name,
+  })
+  .then(response => {
+    console.log(response.data);
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: name,
+    });
+  });
 }
-
+  

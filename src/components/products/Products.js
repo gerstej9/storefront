@@ -1,8 +1,8 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Products.scss';
 import { connect } from 'react-redux';
-import { switchProducts} from '../../store/products.js';
+import { switchProducts, loadProducts} from '../../store/products.js';
 import { addToCart } from '../../store/cart.js';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -30,45 +30,57 @@ const useStyles = makeStyles({
 });
 
 const Products = (props) => {
+
+  useEffect(() => {
+    props.loadProducts();
+  }, [])
+
   const classes = useStyles();
-  return (
-    <div className="products">
-      <h2>{props.category.displayName}</h2>
-      <h2 className="description">{props.category.description}</h2>
-        {props.products.map((product, i) => {
-          return (
-          <Card key={i} className={classes.root}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="/logo192.png"
-              title="Product Picture"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                {product.name}
-              </Typography>
-              <Typography gutterBottom variant="h5" component="h2">
-                ${product.price}
-              </Typography>
-              <Typography gutterBottom variant="h5" component="h2">
-                IN STOCK: {product.inventory}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-          <CardActions className={classes.buttonContainer}>
-            <Button onClick={() => props.addToCart(product)}size="small" color="primary">
-                  ADD TO CART
-            </Button>
-            <Button  size="small" color="primary">
-                  VIEW DETAILS
-            </Button>
-          </CardActions>
-        </Card>
-        )
-      })}
-  </div>
-  )
+  if(props.category.name){
+    return (
+      <div className="products">
+        <h2>{props.category.name.toUpperCase()}</h2>
+        <h2 className="description">{props.category.description}</h2>
+          {props.products.map((product, i) => {
+            return (
+            <Card key={i} className={classes.root}>
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image="/logo192.png"
+                title="Product Picture"
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {product.name}
+                </Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                  ${product.price}
+                </Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                  IN STOCK: {product.inStock}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions className={classes.buttonContainer}>
+              <Button onClick={() => props.addToCart(product)}size="small" color="primary">
+                    ADD TO CART
+              </Button>
+              <Button  size="small" color="primary">
+                    VIEW DETAILS
+              </Button>
+            </CardActions>
+          </Card>
+          )
+        })}
+    </div>
+    )
+  }else{
+    return(
+      <div className="products">
+        </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -81,6 +93,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   switchProducts,
   addToCart,
+  loadProducts,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);

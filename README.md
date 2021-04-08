@@ -7,4 +7,4 @@ This application is created using Redux, React and Material UI to create a mock 
 https://pedantic-pike-e5325c.netlify.app/
 
 ## UML
-![](./Lab36UML.jpg)
+![](./Lab38UML.jpg)
