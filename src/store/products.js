@@ -1,40 +1,9 @@
 
-let productList = [
-  {
-    name: 'keyboard',
-    category: 'electronics',
-    description: 'Typing Device',
-    price: 5,
-    inventory: 10,
-    cart: 0
-  },
-  {
-    name: 'Mouse',
-    category: 'electronics',
-    description: 'Mousing Device',
-    price: 10,
-    inventory: 5,
-    cart: 0
-  },
-  {
-    name: 'Kumquats',
-    category: 'food',
-    description: 'Delicious',
-    price: 20,
-    inventory: 2,
-    cart: 0
-  },
-  {
-    name: 'Kiwi',
-    category: 'food',
-    description: 'Yummy',
-    price: 3,
-    inventory: 7,
-    cart: 0
-  },
-]
+import axios from 'axios';
+
 
 let initialState = {
+  productsList: [],
   products: [],
 }
 
@@ -44,31 +13,40 @@ export default function ProductsReducer(state=initialState, action){
   let {type, payload} = action;
 
   switch(type){
+    case "LOAD_PRODUCTS":
+      console.log(payload.results);
+      return{
+        productList: payload.results,
+        products:[]
+      }
+
     case "FILTER_PRODUCTS":
-    newProducts = productList.filter(product => product.category === payload);
-    return {products: newProducts};
+    let newProductList = state.productList;
+    newProducts = newProductList.filter(product => product.category === payload);
+    return {products: newProducts, productList: state.productList};
 
     case 'ADD_TO_CART':
-    if(payload.inventory > 0){
-      payload.inventory --; 
-    }
-    newProducts = state.products.filter(product => product.inventory !== 0);
-    return {products: newProducts};
+    let newList = state.products;
+    newProducts = newList.filter(product => product.inStock !== 0);
+    return {products: newProducts, productList: state.productList};
 
     default: return state;
-  }
+  };
+}
+
+export const loadProducts = () => (dispatch, getState) =>{
+  return axios.get('https://api-js401.herokuapp.com/api/v1/products')
+    .then(response => {
+      dispatch({
+        type: 'LOAD_PRODUCTS',
+        payload: response.data
+      });
+    });
 }
 
 export function switchProducts(name){
   return{
     type: "FILTER_PRODUCTS",
     payload: name,
-  }
-}
-
-export function decreaseInventory(product){
-  return{
-    type: "REDUCE_INVENTORY",
-    payload: product
-  }
+  };
 }

@@ -1,0 +1,20 @@
+#cart{
+  align-self:baseline;
+  margin-top: 0px;
+  width: 200px;
+  margin-right: 0px;
+  display: flex;
+  justify-content:center;
+}
+
+#cartContent{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center;
+  background-color: lightblue;
+
+  p{
+    width:100%;
+    text-align:center;
+  }
+}
