@@ -1,15 +1,15 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {configureStore } from '@reduxjs/toolkit';
 
-import {composeWithDevTools} from 'redux-devtools-extension';
-import categoriesReducer from './categories.js';
-import productsReducer from'./products.js';
-import cartReducer from './cart.js';
-import thunk from './middleware/thunk.js';
+import categoriesReducer from './categories.slice.js';
+import productsReducer from'./products.slice.js';
+import cartReducer from './cart.slice.js';
 
-const reducers = combineReducers({cart: cartReducer, products: productsReducer, categories: categoriesReducer})
+let reducers = {
+  cart: cartReducer, 
+  products: productsReducer, 
+  categories: categoriesReducer
+};
 
-const store = () =>{
-  return createStore(reducers, composeWithDevTools(applyMiddleware(thunk)));
-}
+const store = configureStore({reducer: reducers});
 
 export default store;

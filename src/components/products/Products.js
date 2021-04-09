@@ -1,9 +1,9 @@
 
 import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import './Products.scss';
-import { connect } from 'react-redux';
-import { switchProducts, loadProducts} from '../../store/products.js';
-import { addToCart } from '../../store/cart.js';
+import { getProducts, selectProduct} from '../../store/products.slice.js';
+import { addToCart} from '../../store/cart.slice.js';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -12,6 +12,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {NavLink} from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -29,19 +30,25 @@ const useStyles = makeStyles({
   }
 });
 
-const Products = (props) => {
+
+export default function Products (){
+
+  let category = useSelector(state => state.categories.activeCategory);
+  let products = useSelector(state => state.products.products);
+  let dispatch = useDispatch();
 
   useEffect(() => {
-    props.loadProducts();
+    dispatch(getProducts());
   }, [])
 
   const classes = useStyles();
-  if(props.category.name){
+  if(category.name){
     return (
       <div className="products">
-        <h2>{props.category.name.toUpperCase()}</h2>
-        <h2 className="description">{props.category.description}</h2>
-          {props.products.map((product, i) => {
+        <h2>{category.name.toUpperCase()}</h2>
+        <h2 className="description">{category.description}</h2>
+          {products.map((product, i) => {
+            let detailUrl = `/products/${product._id}`
             return (
             <Card key={i} className={classes.root}>
             <CardActionArea>
@@ -63,12 +70,10 @@ const Products = (props) => {
               </CardContent>
             </CardActionArea>
             <CardActions className={classes.buttonContainer}>
-              <Button onClick={() => props.addToCart(product)}size="small" color="primary">
+              <Button onClick={() => dispatch(addToCart(product))}size="small" color="primary">
                     ADD TO CART
               </Button>
-              <Button  size="small" color="primary">
-                    VIEW DETAILS
-              </Button>
+              <NavLink className="viewDetails" onClick={() => dispatch(selectProduct(product))} activeClassName="selected" to={detailUrl} >VIEW DETAILS</NavLink>
             </CardActions>
           </Card>
           )
@@ -82,18 +87,3 @@ const Products = (props) => {
     )
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    products: state.products.products,
-    category: state.categories.activeCategory
-  }
-}
-
-const mapDispatchToProps = {
-  switchProducts,
-  addToCart,
-  loadProducts,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Products);

@@ -14,7 +14,6 @@ export default function ProductsReducer(state=initialState, action){
 
   switch(type){
     case "LOAD_PRODUCTS":
-      console.log(payload.results);
       return{
         productList: payload.results,
         products:[]

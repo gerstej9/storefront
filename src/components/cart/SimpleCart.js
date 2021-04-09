@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './SimpleCart.scss';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,14 +15,17 @@ const useStyles = makeStyles({
   }
 });
 
-const SimpleCart = (props) => {
+export default function SimpleCart (){
+
+  let cart = useSelector(state => state.cart.cart);
   const classes = useStyles();
-  if(props.cart.length > 0){
+
+  if(cart.length > 0){
     return(
       <Card className={classes.root} id="cart">
         <CardActionArea>
           <CardContent id="cartContent">
-            {props.cart.map((product, i) => {
+            {cart.map((product, i) => {
                 return (
                     <Typography key={i}>
                       {product.name}: {product.cart}
@@ -41,14 +44,3 @@ const SimpleCart = (props) => {
     )
   }
 }
-
-const mapStateToProps = (state) =>{
-  return{
-    cart: state.cart.cart,
-  }
-}
-
-const mapDispatchToProps = {
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SimpleCart);
