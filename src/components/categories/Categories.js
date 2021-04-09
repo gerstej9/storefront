@@ -1,38 +1,28 @@
 
 import React, { useEffect } from 'react';
 import './Categories.scss';
-import { connect } from 'react-redux';
-import {switchCategory, loadCategories} from '../../store/categories.js';
-import {switchProducts} from '../../store/products.js'
+import { useSelector, useDispatch } from 'react-redux';
+import {switchCategory, getCategories} from '../../store/categories.slice.js';
+import {filterProducts} from '../../store/products.slice.js'
 
-const Categories = (props) => {
+export default function Categories() {
+
+  let dispatch = useDispatch();
+  
   useEffect(() => {
-    props.loadCategories();
+    dispatch(getCategories());
   }, [])
+
+  let categories = useSelector(state => state.categories.categories);
 
   return(
     <div>
       <h2>Browse Our Categories</h2>
-      {props.categories.map((category,i) => {
+      {categories.map((category,i) => {
         return(
-          <button key={i} onClick={() => { props.switchCategory(category.name); props.switchProducts(category.name);}} title={category.name}>{category.name.toUpperCase()}</button>
+          <button key={i} onClick={() => { dispatch(switchCategory(category.name)); dispatch(filterProducts(category.name));}} title={category.name}>{category.name.toUpperCase()}</button>
         )
       })}
     </div>
   )
 }
-
-const mapStateToProps = (state) =>{
-  return{
-    activeCategory: state.categories.activeCategory,
-    categories: state.categories.categories
-  }
-}
-
-const mapDispatchToProps = {
-  switchCategory,
-  switchProducts,
-  loadCategories,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Categories);

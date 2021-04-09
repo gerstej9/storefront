@@ -3,6 +3,7 @@ import React from 'react';
 import './Header.scss';
 import Paper from '@material-ui/core/Paper'
 import { connect } from 'react-redux';
+import {NavLink} from 'react-router-dom';
 
 function Header(props){
   return(
@@ -10,7 +11,8 @@ function Header(props){
     <header className = "App-header" >
       <h1>OUR STORE</h1>
       <nav>
-        <p>Cart({props.cart.cartCount})</p>
+        <NavLink activeClassName="selected" to="/" >Store</NavLink>
+        <NavLink activeClassName="selected" to="/cart" >Cart({props.cart.cartCount})</NavLink>
       </nav>
       </header>
       </Paper>

@@ -1,0 +1,32 @@
+form{
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+section {
+  width: 30%;
+}
+
+.button{
+  width: 100%;
+  display:flex;
+  justify-content: center;
+}
+
+.order{
+  border: 2px #006699 solid;
+  padding: 5px;
+}
+
+input{
+  margin-bottom: 10px;
+}
+
+#productListing{
+  width: 100%;
+  display:flex;
+  justify-content: space-evenly;
+  p{
+    width:24%;
+  }
+}

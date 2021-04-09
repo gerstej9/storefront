@@ -1,4 +1,7 @@
+
 import axios from "axios";
+
+
 
 let initialState = {
   cart: [],
@@ -36,11 +39,9 @@ export const addToCart = (name) => (dispatch, getState) =>{
     data: name,
   })
   .then(response => {
-    console.log(response.data);
     dispatch({
       type: "ADD_TO_CART",
       payload: name,
     });
   });
 }
-  

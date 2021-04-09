@@ -7,22 +7,37 @@ import Categories from './components/categories/Categories.js'
 import Container from '@material-ui/core/Container';
 import store from'./store/index.js';
 import SimpleCart from './components/cart/SimpleCart.js'
-// import { useEffect } from 'react';
+import DetailedCart from './components/cart/DetailedCart.js'
+import ProductDetail from './components/details/Details.js'
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+
 
 function App() {
 
   return (
+    <BrowserRouter>
     <Container>
-      <Provider store={store()}>
-        <Header></Header>
-        <div className = "topLevel">
-        <Categories></Categories>
-        <SimpleCart></SimpleCart>
-        </div>
-        <Products></Products>
-        <Footer></Footer>
+      <Provider store={store}>
+          <Header></Header>
+          <Switch>
+            <Route path="/products/:id">
+              <ProductDetail></ProductDetail>
+            </Route>
+            <Route path="/cart">
+              <DetailedCart></DetailedCart>
+            </Route>
+            <Route path="/">
+              <div className = "topLevel">
+              <Categories></Categories>
+              <SimpleCart></SimpleCart>
+              </div>
+              <Products></Products>
+            </Route>
+          </Switch>
+          <Footer></Footer>
       </Provider>
     </Container>
+    </BrowserRouter>
   );
 }
 
